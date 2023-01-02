@@ -1,0 +1,7 @@
+Output.java:22: error: <identifier> expected
+  Employee(inteid, String n){
+                 ^
+Output.java:31: error: class, interface, or enum expected
+}
+^
+2 errors
