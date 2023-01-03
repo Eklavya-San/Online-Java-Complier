@@ -2,7 +2,8 @@ import {useState} from 'react'
 import Axios from 'axios';
 import React from 'react'
 // import Javaoutput from './components/Javaoutput';
-import Just from './components/Just';
+// import Just from './components/Just';
+import Another from './components/Another';
 
 
 function App(){
@@ -23,12 +24,12 @@ function App(){
         setCode(event.target.value);
       }}></textarea><br></br>
       <label htmlFor="code">Enter your code</label>
-      <button type='button' onClick={submit}>submit your code</button>
+      <button type='button' onClick={submit}>Compile code</button>
       </div>
       <div >
       {/* <Javaoutput></Javaoutput> */}
-      <Just></Just>
-      
+      {/* <Just></Just> */}
+      <Another></Another>
 <br></br>
    
     
