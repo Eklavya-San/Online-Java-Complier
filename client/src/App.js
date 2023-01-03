@@ -4,6 +4,7 @@ import React from 'react'
 // import Javaoutput from './components/Javaoutput';
 // import Just from './components/Just';
 import Another from './components/Another';
+// import MyCodeEditor from './components/MyCodeEditior';
 
 
 function App(){
@@ -12,13 +13,14 @@ function App(){
   
   const submit=()=>{
     let payload = {code:code};
-    Axios.post('http://localhost:3000/',payload);
+    Axios.post('http://192.168.34.6:3000/',payload);
   }
 
  
 
   return (
     <div>
+      <fieldset><h1>Online java Compiler</h1></fieldset>
       <div>
       <textarea name="code" id="t1" cols="70" rows="10" onChange={(event)=>{
         setCode(event.target.value);
@@ -30,6 +32,7 @@ function App(){
       {/* <Javaoutput></Javaoutput> */}
       {/* <Just></Just> */}
       <Another></Another>
+      {/* <MyCodeEditor></MyCodeEditor> */}
 <br></br>
    
     

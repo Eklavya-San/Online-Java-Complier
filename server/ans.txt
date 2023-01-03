@@ -1,4 +1,4 @@
-Output.java:5: error: reached end of file while parsing
-}sdf
- ^
+Output.java:1: error: class Outt is public, should be declared in a file named Outt.java
+public class Outt {
+       ^
 1 error

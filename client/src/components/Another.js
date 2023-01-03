@@ -4,10 +4,10 @@ function Another() {
   const [data, setData] = useState(null);
 
   async function fetchData() {
-    const response = await fetch('http://localhost:3000/display');
+    const response = await fetch('http://192.168.34.6:3000/display');
     const json = await response.json();
     setData(json);
-    document.getElementById('out').innerHTML = json.code;
+    document.getElementById('out').innerHTML = data.code;
   }
 
   function handlClick() {
