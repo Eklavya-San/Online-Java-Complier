@@ -11,14 +11,6 @@ const command = "echo '8779' | sudo -s './codeRunner.sh' ";
 app.use(cors())
 app.use(bodyParser.json())
 
-app.use(bodyParser.urlencoded({extended:false}));
-app.use(function(req,resp,next){
-    resp.setHeader('Access-control-Allow-origin','*');
-    resp.setHeader('Access-Control-Allow-Methods','GET','POST','PUT','DELETE');
-    resp.setHeader('Access-Control-Allow-Credentials',true);
-    resp.setHeader('Access-Control-Allow-Headers','Content-Type');
-    next();
-});
 app.get('/',(req,res)=>{
     res.send("we are on home ");
 })

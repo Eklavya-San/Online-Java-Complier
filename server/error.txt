@@ -1,4 +1,7 @@
-Output.java:1: error: class Outt is public, should be declared in a file named Outt.java
-public class Outt {
-       ^
-1 error
+Output.java:1: error: class, interface, or enum expected
+safj;aklsd
+^
+Output.java:1: error: reached end of file while parsing
+safj;aklsd
+     ^
+2 errors
