@@ -1,22 +1,15 @@
 import {useState} from 'react'
 import Axios from 'axios';
 import React from 'react'
-// import Javaoutput from './components/Javaoutput';
-// import Just from './components/Just';
 import FetchData from './components/FetchData';
 
 
 function App(){
-
   const [code,setCode]=useState();
-  
   const submit=()=>{
     let payload = {code:code};
     Axios.post('http://localhost:3000/',payload);
   }
-
- 
-
   return (
     <div>
       <div>
@@ -27,12 +20,8 @@ function App(){
       <button type='button' onClick={submit}>submit your code</button>
       </div>
       <div >
-      {/* <Javaoutput></Javaoutput> */}
-      {/* <Just></Just> */}
       <FetchData></FetchData>
 <br></br>
-   
-    
       </div>
     </div>
   )
