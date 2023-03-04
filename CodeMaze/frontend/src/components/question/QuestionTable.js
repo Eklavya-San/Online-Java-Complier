@@ -87,6 +87,7 @@ const QuestionTable = () => {
           ))}
         </tbody>
       </Table>
+     
     </div>
   );
 };

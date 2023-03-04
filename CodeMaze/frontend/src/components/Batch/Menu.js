@@ -5,7 +5,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import React from 'react';
 import AddBatch from './AddBatch'
 import BatchTable from './BatchTable'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
 import DashBoard from './DashBoard'
 import UpdateBatch from './UpdateBatch';
 import Remove from './Remove';
@@ -20,34 +20,52 @@ import RemoveTest from '../test/RemoveTest';
 import UpdateTest from '../test/UpdateTest';
 import QuestionTable from '../question/QuestionTable';
 import CreateQuestion from '../question/CreateQuestion';
+import RemoveQuestion from '../question/RemoveQuestion'
+import UpdateQuestion from '../question/UpdateQuestion'
+import CreateTestCase from '../testcase/CreateTestCase';
+import UpdateTestCase from '../testcase/UpdateTestCase';
+import RemoveTestCase from '../testcase/RemoveTestCase';
 
 function Menu() {
     return (
         <div>
             <BrowserRouter>
-                <Navbar bg="light" expand="lg">
+
+                <Navbar bg="light" expand="lg" className='sidebar'>
                     <Container>
-                        <Navbar.Brand href="/">Batches</Navbar.Brand>
+                        <Navbar.Brand as={Link} to="/">
+                            Batches
+                        </Navbar.Brand>
                         <Navbar.Toggle aria-controls="basic-navbar-nav" />
                         <Navbar.Collapse id="basic-navbar-nav">
                             <Nav className="me-auto">
-                                <Nav.Link href="/batchdashboard">Dashboard</Nav.Link>
+                                <Nav.Link as={Link} to="/batchdashboard">
+                                    Dashboard
+                                </Nav.Link>
                                 <NavDropdown title="Batch Menu" id="basic-nav-dropdown">
-                                    <NavDropdown.Item href="/addbatch">Add</NavDropdown.Item>
-                                    <NavDropdown.Item href="/allbatches">Display All</NavDropdown.Item>
-
+                                    <NavDropdown.Item as={Link} to="/addbatch">
+                                        Add
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item as={Link} to="/allbatches">
+                                        Display All
+                                    </NavDropdown.Item>
                                 </NavDropdown>
                                 <NavDropdown title="Test Menu" id="basic-nav-dropdown">
-                                    <NavDropdown.Item href="/createtest">Create Test</NavDropdown.Item>
-                                    <NavDropdown.Item href="/testtable">Display All Tests</NavDropdown.Item>
-
+                                    <NavDropdown.Item as={Link} to="/createtest">
+                                        Create Test
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item as={Link} to="/testtable">
+                                        Display All Tests
+                                    </NavDropdown.Item>
                                 </NavDropdown>
                                 <NavDropdown title="Question Menu" id="basic-nav-dropdown">
-                                    <NavDropdown.Item href="/createquestion">Add Question</NavDropdown.Item>
-                                    <NavDropdown.Item href="/questiontable">Display All questions</NavDropdown.Item>
-
+                                    <NavDropdown.Item as={Link} to="/createquestion">
+                                        Add Question
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item as={Link} to="/questiontable">
+                                        Display All questions
+                                    </NavDropdown.Item>
                                 </NavDropdown>
-
                             </Nav>
                         </Navbar.Collapse>
                     </Container>
@@ -74,8 +92,15 @@ function Menu() {
                     {/* question routes */}
                     <Route path="/createquestion" exact element={<CreateQuestion />} />
                     <Route path="/questiontable" exact element={<QuestionTable />} />
-                    <Route path="/deletequestion/:id" exact element={<RemoveTest />} />
-                    <Route path="/updatequestion/:id" exact element={<UpdateTest />} />
+                    <Route path="/deletequestion/:id" exact element={<RemoveQuestion />} />
+                    <Route path="/updatequestion/:id" exact element={<UpdateQuestion />} />
+                    {/* test case routes  */}
+                    <Route path="/createtestcase" exact element={<CreateTestCase />} />
+                    <Route path="/updatetestcase/:id" exact element={<UpdateTestCase />} />
+                    <Route path="/deletetestcase/:id" exact element={<RemoveTestCase />} />
+
+
+
                 </Routes>
             </BrowserRouter>
 

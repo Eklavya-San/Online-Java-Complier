@@ -2,13 +2,13 @@ import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-const DeleteQuestion = () => {
-  const params = useParams();
-  const questionId = params.id;
+const RemoveTestCase = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
-  let count = 0;
+  var count = 0;
 
   useEffect(() => {
+    console.log('test');
     if (count === 0) {
       fetchData();
       count++;
@@ -17,13 +17,14 @@ const DeleteQuestion = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`http://localhost:6969/question/remove/${questionId}`, {
+      console.log(id);
+      const response = await fetch(`http://localhost:6969/testcase/remove/${id}`, {
         method: 'DELETE',
       });
       if (!response.ok) {
-        throw new Error('Failed to delete question');
+        throw new Error('Failed to delete test case');
       }
-      toast.success('Question deleted successfully', {
+      toast.success('Test case deleted successfully', {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -33,10 +34,10 @@ const DeleteQuestion = () => {
         progress: undefined,
         theme: "dark",
       });
-      navigate('/questiontable');
+      navigate('/testcases');
     } catch (error) {
       console.error(error);
-      toast.error('Error deleting question. Please try again later.', {
+      toast.error('Error deleting test case. Please try again later.', {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -53,4 +54,4 @@ const DeleteQuestion = () => {
   return null;
 };
 
-export default DeleteQuestion;
+export default RemoveTestCase;

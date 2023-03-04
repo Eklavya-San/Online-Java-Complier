@@ -2,10 +2,13 @@ import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import './App.css';
 import Menu from './components/Batch/Menu'
+import Sidebar from './components/Batch/Sidebar';
 function App() {
   return (
-    <div className="container">
-      <ToastContainer
+    <div >
+       {/* <Sidebar/> */}
+       <div className="container">
+       <ToastContainer
         position="top-center"
         autoClose={5000}
         hideProgressBar={false}
@@ -18,6 +21,8 @@ function App() {
         theme="dark"
       />
       <Menu />
+       </div>
+     
     </div>
   );
 }

@@ -124,7 +124,7 @@ const UpdateTest = () => {
           </div>
           <div className="mb-3">
             <label htmlFor="description" className="form-label">
-              Title
+              Description
             </label>
             <input
               type="text"
@@ -137,7 +137,7 @@ const UpdateTest = () => {
           </div>
           <div className="mb-3">
             <label htmlFor="duration" className="form-label">
-              Title
+              Duration in Minutes
             </label>
             <input
               type="text"
@@ -151,7 +151,7 @@ const UpdateTest = () => {
 
           <div className="mb-3">
             <label htmlFor="maxMarks" className="form-label">
-              Title
+              Maximum marks 
             </label>
             <input
               type="text"
@@ -165,7 +165,7 @@ const UpdateTest = () => {
 
           <div className="mb-3">
             <label htmlFor="startDate" className="form-label">
-              Title
+              Start Date
             </label>
             <input
               type="text"
@@ -178,7 +178,7 @@ const UpdateTest = () => {
           </div>
           <div className="mb-3">
             <label htmlFor="endDate" className="form-label">
-              Title
+              End Date
             </label>
             <input
               type="text"

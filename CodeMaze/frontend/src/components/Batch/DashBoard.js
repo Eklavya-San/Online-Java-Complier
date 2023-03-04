@@ -5,12 +5,15 @@ import { Link } from 'react-router-dom'
 const DashBoard = () => {
   return (
     <div className='container'>DashBoard
+
+    <hr></hr>
+    <h3>Student</h3>
       <Link to={`/studentsignup`}>
-        <Button className='btn btn-edit' >Student Signup</Button>
+        <Button className='btn btn-edit' > Signup</Button>
       </Link>
-<hr></hr>
+      &nbsp;
       <Link to={`/studentlogin`}>
-        <Button className='btn btn-edit' >Student Login</Button>
+        <Button className='btn btn-edit' > Login</Button>
       </Link>
     </div>
 

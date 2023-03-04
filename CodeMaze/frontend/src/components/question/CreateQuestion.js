@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
+import { Modal, Button } from 'react-bootstrap';
+import CreateTestCase from '../testcase/CreateTestCase';
+
 
 const CreateQuestion = () => {
+  const [showModal, setShowModal] = useState(false);
+
   const [question, setQuestion] = useState({
     questionId: 0,
     questionMarks: 0,
@@ -97,6 +102,21 @@ const CreateQuestion = () => {
           Create
         </button>
       </form>
+      <br></br>
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>My Form</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <CreateTestCase />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={() => setShowModal(false)}>Close</Button>
+          <Button onClick={handleSubmit}>Submit</Button>
+        </Modal.Footer>
+      </Modal>
+      <Button onClick={() => setShowModal(true)}>Add Test Case</Button>
+
     </div>
   );
 };
