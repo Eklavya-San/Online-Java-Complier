@@ -1,0 +1,23 @@
+.batch-table {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .batch-table h1 {
+    text-align: center;
+  }
+  
+  .batch-table table {
+    margin-top: 20px;
+  }
+  
+  .batch-table th {
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  .batch-table td {
+    text-align: center;
+  }
+  
