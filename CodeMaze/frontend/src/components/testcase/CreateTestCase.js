@@ -22,7 +22,7 @@ const CreateTestCase = (prop) => {
 
     try {
         console.log(parseInt(prop.prop));
-      if (input !== '' && output !== '' && marks >= 0) {
+      if (output !== '' && marks >= 0) {
         const response = await fetch('http://localhost:6969/testcase/create', {
           method: 'post',
           body: JSON.stringify(requestBody),
