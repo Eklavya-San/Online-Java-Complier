@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Table } from 'react-bootstrap';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const BatchDetails = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user && user.userrole !== 'ROLE_ADMIN') {
+      toast.error('You do not have permission to access this page.');
+      navigate('/studentdashboard');
+    }
+  }, [navigate]);
   const [batchDetails, setbatchDetails] = useState([]);
   const [filterType, setFilterType] = useState('prn');
   const [filterValue, setFilterValue] = useState('');

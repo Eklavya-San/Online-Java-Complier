@@ -1,9 +1,18 @@
 import { Center } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import './QuestionDetails.css'
 function TestDetails({ prop }) {
+
+    const navigate = useNavigate();
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user && user.userrole !== 'ROLE_ADMIN') {
+            toast.error('You do not have permission to access this page.');
+            navigate('/studentdashboard');
+        }
+    }, [navigate]);
     const [testCases, setTestCases] = useState([]);
     const id = parseInt(prop);
 
@@ -26,7 +35,7 @@ function TestDetails({ prop }) {
                 <div key={testCase.caseId} className="card">
                     <div className="card-header">Test Case {testCase.caseId}
                         <Center>
-                            
+
                             <Link to={`/updatetestcase/${testCase.caseId}`}>
                                 <Button className="btn btn-edit">Edit</Button>
                             </Link>

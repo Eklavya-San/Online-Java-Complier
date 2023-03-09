@@ -24,7 +24,7 @@ const Signup = () => {
       toast.error('Please fill in all fields');
     } else {
       // post form data to server
-      fetch('http://localhost:6969/student/signup', {
+      fetch('http://localhost:6969/signupstudent', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -97,7 +97,7 @@ const Signup = () => {
       </Form.Group>
 
         <br></br>  
-          <Button class="btn btn-primary" type="submit" onClick={handleSubmit}>Submit form</Button>
+          <Button className="btn btn-primary" type="submit" onClick={handleSubmit}>Submit form</Button>
    
 
     </Form>

@@ -18,10 +18,10 @@ const StudentLogin = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const requestBody = {
-      email: email,
+      username: email,
       password: password,
     };
-    fetch('http://localhost:6969/student/signin', {
+    fetch('http://localhost:6969/signinuser', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -46,7 +46,14 @@ const StudentLogin = () => {
           progress: undefined,
           theme: 'dark',
         });
-        history('/dashboard');
+        localStorage.setItem('token',"Bearer "+ data.token);
+        localStorage.setItem('user',JSON.stringify(data.dto));
+        var user = JSON.parse(localStorage.getItem('user'));
+        if(user.userrole==='ROLE_ADMIN'){
+          history('/admindashboard')
+        }else{
+          history('/studentdashboard')
+        }
       })
       .catch((error) => {
         console.error('Error logging in:', error);

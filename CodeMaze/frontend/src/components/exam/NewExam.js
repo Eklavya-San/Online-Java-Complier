@@ -1,11 +1,21 @@
 
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Table } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const NewExam = () => {
+    const navigate = useNavigate();
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user && user.userrole !== 'ROLE_ADMIN') {
+            toast.error('You do not have permission to access this page.');
+            navigate('/studentdashboard');
+        }
+    }, [navigate]);
     //sending data
-    const [adminId, setadminId] = useState(3);
+    const [adminId, setadminId] = useState(0);
     const [stdId, setstdId] = useState([]);
     const [testId, settestId] = useState();
     const [queId, setqueId] = useState([]);
@@ -16,7 +26,7 @@ const NewExam = () => {
     const [batchId, setbatchId] = useState();
     const [students, setstudents] = useState([]);
     const [questions, setquestions] = useState([]);
-
+    const user = JSON.parse(localStorage.getItem('user'));
     //fetch all tests
     useEffect(() => {
         fetch('http://localhost:6969/test')
@@ -29,12 +39,14 @@ const NewExam = () => {
             .then((data) => {
                 settests(data);
                 settestId(data[0].testId);// set the first test as default
+                setadminId(user.userId);
+
             })
             .catch((errpr) => {
                 console.log(`error fetching test:${errpr}`);
             });
 
-    }, []);
+    });
 
     //fetch all batches to find students by batch id
 
@@ -120,36 +132,40 @@ const NewExam = () => {
             );
         }
     };
-
+    const handleCheckAllStudents = (event) => {
+        const checked = event.target.checked;
+        setstdId(checked ? students.map((s) => s.id) : []);
+    };
     const handleSubmit = (event) => {
         event.preventDefault();
         const requestBody = {
-          adminId: adminId,
-          stdId: stdId,
-          testId: testId,
-          queId: queId,
+            adminId: adminId,
+            stdId: stdId,
+            testId: testId,
+            queId: queId,
         };
         console.log(requestBody);
         axios.post('http://localhost:6969/exam/createexam', requestBody, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+            headers: {
+                'Content-Type': 'application/json',
+            },
         })
-          .then((response) => {
-            console.log('Exam created:', response.data);
-            alert('Exam created successfully');
-          })
-          .catch((error) => {
-            console.error('Error creating exam:', error);
-            alert('Exam creation failed. Please try again.');
-          });
-      }
-      
+            .then((response) => {
+                console.log('Exam created:', response.data);
+                alert('Exam created successfully');
+            })
+            .catch((error) => {
+                console.error('Error creating exam:', error);
+                alert('Exam creation failed. Please try again.');
+            });
+
+    }
+
     return (
         <div>
             <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="formTestId">
-                    <Form.Label>Select Test:</Form.Label>
+                    <Form.Label><h5>Select Test:</h5></Form.Label>
                     <Form.Control as="select" onChange={handleTestChange}>
                         {tests.map((test) => (
                             <option key={test.testId} value={test.testId}>
@@ -158,8 +174,9 @@ const NewExam = () => {
                         ))}
                     </Form.Control>
                 </Form.Group>
+                <hr></hr>
                 <Form.Group controlId="formBatchId">
-                    <Form.Label>Select Batch:</Form.Label>
+                    <Form.Label><h5>Select Batch:</h5></Form.Label>
                     <Form.Control as="select" onChange={handleBatchChange}>
                         {batches.map((batch) => (
                             <option key={batch.batchId} value={batch.batchId}>
@@ -168,30 +185,77 @@ const NewExam = () => {
                         ))}
                     </Form.Control>
                 </Form.Group>
+                <hr></hr>
+
                 <Form.Group controlId="formStudents">
-                    <Form.Label>Select Students:</Form.Label>
-                    {students.map((student) => (
-                        <Form.Check
-                            key={student.stdPrn}
-                            type="checkbox"
-                            label={student.stdFirstname}
-                            value={student.stdPrn}
-                            onChange={handleStudentChange}
-                        />
-                    ))}
+                    <Form.Label><h5>Select students:</h5></Form.Label>
+
+                    <Table striped bordered hover >
+                        <thead>
+                            <tr>
+                                <th><Form.Check
+                                    type="checkbox"
+                                    label="Check All"
+                                    onChange={handleCheckAllStudents}
+                                /></th>
+                                <th>PRN</th>
+                                <th>Roll No</th>
+                                <th>Full name</th>
+                            </tr>
+                        </thead>
+
+                        {students.map((student) => (
+                            <tr>
+                                <td>
+                                    <Form.Check
+                                        key={student.stdPrn}
+                                        type="checkbox"
+                                        value={student.stdPrn}
+                                        onChange={handleStudentChange} />
+                                </td>
+                                <td>{student.stdPrn}</td>
+                                <td>{student.stdRollno}</td>
+                                <td>{student.stdFirstname + " " + student.stdLastname}</td>
+                            </tr>
+                        ))}
+                    </Table>
                 </Form.Group>
+                <hr></hr>
+
                 <Form.Group controlId="formQuestions">
-                    <Form.Label>Select Questions:</Form.Label>
-                    {questions.map((question) => (
-                        <Form.Check
-                            key={question.questionId}
-                            type="checkbox"
-                            label={question.questionText}
-                            value={question.questionId}
-                            onChange={handleQuestionChange}
-                        />
-                    ))}
+                    <Form.Label><h5>Select Questions:</h5></Form.Label>
+                    <Table striped bordered hover>
+                        <thead>
+                            <tr>
+                                <th>CheckBox</th>
+                                <th>Question ID</th>
+                                <th>Question Text</th>
+                                <th>Question Marks</th>
+                            </tr>
+                        </thead>
+
+                        {questions.map((question) => (
+                            <tr>
+                                <td>
+                                    <Form.Check
+                                        key={question.questionId}
+                                        type="checkbox"
+                                        value={question.questionId}
+                                        onChange={handleQuestionChange}
+                                    />
+                                </td>
+                                <td>{question.questionId}</td>
+                                <td>{question.questionText}</td>
+                                <td>{question.questionMarks}</td>
+
+                            </tr>
+
+                        ))}
+                    </Table>
                 </Form.Group>
+
+                <hr></hr>
+
                 <Button variant="primary" type="submit">
                     Create Exam
                 </Button>

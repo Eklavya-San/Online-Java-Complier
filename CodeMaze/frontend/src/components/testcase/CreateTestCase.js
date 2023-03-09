@@ -1,9 +1,18 @@
 
-import React, { useState } from 'react';
-import { Button, Container, Form } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Button, Container, Form, Toast } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const CreateTestCase = (prop) => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user && user.userrole !== 'ROLE_ADMIN') {
+      Toast.error('You do not have permission to access this page.');
+      navigate('/studentdashboard');
+    }
+  }, [navigate]);
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [marks, setMarks] = useState(0);

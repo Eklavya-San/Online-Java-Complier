@@ -3,6 +3,14 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const UpdateTest = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user && user.userrole !== 'ROLE_ADMIN') {
+      toast.error('You do not have permission to access this page.');
+      navigate('/studentdashboard');
+    }
+  }, [navigate]);
   const paramid = useParams();
   var as = JSON.stringify(paramid);
   const id = JSON.parse(as);

@@ -2,11 +2,19 @@ import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 const Remove = () => {
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user && user.userrole !== 'ROLE_ADMIN') {
+      toast.error('You do not have permission to access this page.');
+      navigate('/studentdashboard');
+    }
+  }, [navigate]);
   const paramid = useParams();
   var as = JSON.stringify(paramid);
   const pid = JSON.parse(as);
   var id = pid.id;
-  const navigate = useNavigate();
   var count = 0;
   useEffect(() => {
     console.log('test');

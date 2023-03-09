@@ -1,11 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import './Batchtable.css';
 
 
-const BatchTable = () => { 
+const BatchTable = () => {
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user && user.userrole !== 'ROLE_ADMIN') {
+      toast.error('You do not have permission to access this page.');
+      navigate('/studentdashboard');
+    }
+  }, [navigate]);
   const [batches, setBatches] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [searchBy, setSearchBy] = useState('batchId');

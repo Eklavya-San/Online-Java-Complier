@@ -1,13 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
-import { Link } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Testtable = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user && user.userrole !== 'ROLE_ADMIN') {
+      toast.error('You do not have permission to access this page.');
+      navigate('/studentdashboard');
+    }
+  }, [navigate]);
   const [tests, setTests] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [searchBy, setSearchBy] = useState('testId');
+  const user = JSON.parse(localStorage.getItem('user'));
+  const adminId = user.userId;
 
   useEffect(() => {
     const fetchTests = async () => {
@@ -35,9 +45,15 @@ const Testtable = () => {
       return test.testId.toString().includes(searchText);
     } else if (searchBy === 'testName') {
       return test.testTitle.toLowerCase().includes(searchText.toLowerCase());
-    } 
+    }
     return true;
   });
+
+  const isTestPastEndDate = (testEndDate) => {
+    const today = new Date();
+    const endDate = new Date(testEndDate);
+    return today > endDate;
+  };
 
   return (
     <div>
@@ -45,15 +61,25 @@ const Testtable = () => {
       <div className="search-bar">
         <div className="form-group">
           <label htmlFor="searchBy">Search By:</label>
-          <select id="searchBy" className="form-control" value={searchBy} onChange={handleSearchByChange}>
+          <select
+            id="searchBy"
+            className="form-control"
+            value={searchBy}
+            onChange={handleSearchByChange}
+          >
             <option value="testId">Test ID</option>
             <option value="testName">Test Name</option>
-            
           </select>
         </div>
         <div className="form-group">
           <label htmlFor="searchText">Search Text:</label>
-          <input type="text" id="searchText" className="form-control" value={searchText} onChange={handleSearchTextChange} />
+          <input
+            type="text"
+            id="searchText"
+            className="form-control"
+            value={searchText}
+            onChange={handleSearchTextChange}
+          />
         </div>
       </div>
       <Table striped bordered hover>
@@ -73,8 +99,12 @@ const Testtable = () => {
         <tbody>
           {filteredTests.map((test) => (
             <tr key={test.testId}>
-              <td data-toggle="tooltip" data-placement="top" title="click to check test details">
-                <Link to={`/testdetails/${test.testId}`}>{test.testId}</Link>
+              <td data-toggle="tooltip" data-placement="top" title="click to check test result">
+                {isTestPastEndDate(test.testEndDate) ? (
+                  <Link to={`/result/${adminId}/${test.testId}`}>{test.testId}</Link>
+                ) : (
+                  <span>{test.testId}</span>
+                )}
               </td>
               <td>{test.testTitle}</td>
               <td>{test.testDuration}</td>
@@ -100,6 +130,5 @@ const Testtable = () => {
       </Table>
     </div>
   );
-          }
-          export default Testtable;  
-    
+}
+export default Testtable;

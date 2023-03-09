@@ -2,11 +2,10 @@ import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import './App.css';
 import Menu from './components/Batch/Menu'
-import FrontPage from './components/common/FrontPage'
+import { BrowserRouter } from 'react-router-dom';
 function App() {
   return (
-    <div >
-       {/* <Sidebar/> */}
+    <div className="container">
        <div className="container">
        <ToastContainer
         position="top-center"
@@ -20,9 +19,11 @@ function App() {
         pauseOnHover
         theme="dark"
       />
+      <BrowserRouter>
+      
       <Menu />
+      </BrowserRouter>
 
-    <FrontPage/>
       
       
        </div>

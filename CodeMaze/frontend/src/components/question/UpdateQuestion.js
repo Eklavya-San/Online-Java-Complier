@@ -28,7 +28,7 @@ const UpdateQuestion = () => {
             .catch(error => {
                 console.error(`Error fetching question data for id=${pid}:`, error);
             });
-    }, [pid,showModal]);
+    }, [pid, showModal]);
 
     const handleQuestionTextChange = event => {
         setQuestionText(event.target.value);
@@ -92,15 +92,16 @@ const UpdateQuestion = () => {
             <Center><h1>Update Question</h1></Center>
             <h4>Question id: {pid}</h4>
             <form onSubmit={handleSubmit}>
+                {/*  */}
                 <div className="mb-3">
                     <label htmlFor="questionText" className="form-label">
                         Question Text
                     </label>
-                    <input
-                        type="text"
+                    <textarea
                         className="form-control"
                         id="questionText"
                         name="questionText"
+                        rows="6"
                         value={questionText}
                         onChange={handleQuestionTextChange}
                     />
@@ -141,9 +142,9 @@ const UpdateQuestion = () => {
             <hr></hr>
             <fieldset>
                 <legend>Current test cases</legend>
-             <QuestionDetails prop={pid} />
+                <QuestionDetails prop={pid} />
             </fieldset>
-            
+
 
         </div>
     )

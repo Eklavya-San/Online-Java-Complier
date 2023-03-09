@@ -4,6 +4,15 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const UpdateTestCase = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user && user.userrole !== 'ROLE_ADMIN') {
+      toast.error('You do not have permission to access this page.');
+      navigate('/studentdashboard');
+    }
+  }, [navigate]);
+
   const paramid = useParams();
   var as = JSON.stringify(paramid);
   const id = JSON.parse(as);
@@ -16,7 +25,7 @@ const UpdateTestCase = () => {
 
   useEffect(() => {
     // Fetch test case data from server using `id`
-    fetch(`http://localhost:6969/testcase/findbyid/`+pid)
+    fetch(`http://localhost:6969/testcase/findbyid/` + pid)
       .then(response => response.json())
       .then(data => {
         setCaseInput(data.caseInput);
@@ -99,7 +108,20 @@ const UpdateTestCase = () => {
             </Card.Header>
             <Card.Body>
               <Form onSubmit={handleSubmit}>
-                <Form.Group controlId="formCaseInput">
+                <div className="mb-3">
+                  <label htmlFor="questionText" className="form-label">
+                    Enter input
+                  </label>
+                  <textarea
+                    className="form-control"
+                    id="questionText"
+                    name="questionText"
+                    rows="6"
+                    value={caseInput}
+                    onChange={handleCaseInputChange}
+                  />
+                </div>
+                {/* <Form.Group controlId="formCaseInput">
                   <Form.Label>Input</Form.Label>
                   <Form.Control
                     type="text"
@@ -107,7 +129,7 @@ const UpdateTestCase = () => {
                     onChange={handleCaseInputChange}
                     placeholder="Enter input"
                   />
-                </Form.Group>
+                </Form.Group> */}
                 <Form.Group controlId="formCaseMarks">
                   <Form.Label>Marks</Form.Label>
                   <Form.Control
@@ -117,7 +139,20 @@ const UpdateTestCase = () => {
                     placeholder="Enter marks"
                   />
                 </Form.Group>
-                <Form.Group controlId="formCaseOutput">
+                <div className="mb-3">
+                  <label htmlFor="questionText" className="form-label">
+                    Enter Output
+                  </label>
+                  <textarea
+                    className="form-control"
+                    id="questionText"
+                    name="questionText"
+                    rows="6"
+                    value={caseOutput}
+                    onChange={handleCaseOutputChange}
+                  />
+                </div>
+                {/* <Form.Group controlId="formCaseOutput">
                   <Form.Label>Output</Form.Label>
                   <Form.Control
                     type="text"
@@ -125,7 +160,7 @@ const UpdateTestCase = () => {
                     onChange={handleCaseOutputChange}
                     placeholder="Enter output"
                   />
-                </Form.Group>
+                </Form.Group> */}
                 <Button variant="primary" type="submit">
                   Update
                 </Button>
@@ -136,6 +171,6 @@ const UpdateTestCase = () => {
       </Row>
     </Container>
   );
-  
+
 }
 export default UpdateTestCase;
