@@ -15,6 +15,7 @@ const Remove = () => {
   var as = JSON.stringify(paramid);
   const pid = JSON.parse(as);
   var id = pid.id;
+  console.log(as)
   var count = 0;
   useEffect(() => {
     console.log('test');

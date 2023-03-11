@@ -83,6 +83,7 @@ const CreateQuestion = () => {
             rows="5"
             value={question.questionText}
             onChange={handleInputChange}
+            required
           />
         </div>
         <div className="mb-3">
@@ -95,28 +96,15 @@ const CreateQuestion = () => {
             id="questionMarks"
             name="questionMarks"
             value={question.questionMarks}
-            onChange={handleInputChange}
+            onChange={handleInputChange} 
+            required
           />
         </div>
         <button type="submit" className="btn btn-primary">
           Create
         </button>
       </form>
-      <br></br>
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>My Form</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <CreateTestCase />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={() => setShowModal(false)}>Close</Button>
-          <Button onClick={handleSubmit}>Submit</Button>
-        </Modal.Footer>
-      </Modal>
-      <Button onClick={() => setShowModal(true)}>Add Test Case</Button>
-
+     
     </div>
   );
 };

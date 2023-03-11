@@ -9,6 +9,7 @@ const AddBatch = () => {
   const [desc, setDesc] = useState('');
   const history = useNavigate();
   const date = new Date();
+  const token = localStorage.getItem("token");
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -34,6 +35,7 @@ const AddBatch = () => {
           body: JSON.stringify(requestBody),
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': token
           },
         });
 

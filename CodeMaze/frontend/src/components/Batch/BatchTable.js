@@ -50,6 +50,7 @@ const BatchTable = () => {
     return true;
   });
 
+
   return (
     <div>
       <h1>All Batches</h1>
@@ -102,6 +103,7 @@ const BatchTable = () => {
                   <Button className="btn btn-danger" >
                     Delete
                   </Button>
+                 
                 </Link>
               </td>
             </tr>

@@ -108,7 +108,7 @@ const Testtable = () => {
               </td>
               <td>{test.testTitle}</td>
               <td>{test.testDuration}</td>
-              <td>{test.totalQuestions}</td>
+              <td>{test.testMaxQuestions}</td>
               <td>{test.testMaxMarks}</td>
               <td>{new Date(test.testStartDate).toLocaleString()}</td>
               <td>{new Date(test.testEndDate).toLocaleString()}</td>

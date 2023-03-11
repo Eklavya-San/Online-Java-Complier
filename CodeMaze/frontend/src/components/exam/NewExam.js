@@ -14,12 +14,14 @@ const NewExam = () => {
             navigate('/studentdashboard');
         }
     }, [navigate]);
+    const token = localStorage.getItem('token');
+    //check all boxes 
+    const [selectAllStudents, setSelectAllStudents] = useState(false);
     //sending data
     const [adminId, setadminId] = useState(0);
     const [stdId, setstdId] = useState([]);
     const [testId, settestId] = useState();
     const [queId, setqueId] = useState([]);
-
     //data to create dropdown and checkboxes
     const [tests, settests] = useState([]);
     const [batches, setbatches] = useState([]);
@@ -32,11 +34,15 @@ const NewExam = () => {
         fetch('http://localhost:6969/test')
             .then((response) => {
                 if (!response.ok) {
+                    console.log("hello1")
+
                     throw new Error(`HTTP error ! status : ${response.status}`);
                 }
                 return response.json();
             })
             .then((data) => {
+                console.log("hello2")
+
                 settests(data);
                 settestId(data[0].testId);// set the first test as default
                 setadminId(user.userId);
@@ -46,57 +52,62 @@ const NewExam = () => {
                 console.log(`error fetching test:${errpr}`);
             });
 
-    });
-
+    }, []);
     //fetch all batches to find students by batch id
-
     useEffect(() => {
         fetch(`http://localhost:6969/batch`)
             .then((response) => {
                 if (!response.ok) {
+                    console.log("hello3")
+
                     throw new Error(`HTTP error ! status : ${response.status}`);
                 }
                 return response.json();
             })
             .then((data) => {
+                console.log("hello4")
+
                 setbatches(data);
                 setbatchId(data[0].batchId); //set first batch as default
             })
             .catch((error) => {
                 console.error('Error fetching batches:', error);
-
             })
     }, []);
-
     //fetch students from selected batch 
-
     useEffect(() => {
         fetch(`http://localhost:6969/student/findbybatch/${batchId}`)
             .then((response) => {
                 if (!response.ok) {
+                    console.log("hello5")
+
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 return response.json();
             })
             .then((data) => {
+                console.log("hello6")
+
                 setstudents(data);
             })
             .catch((error) => {
                 console.error('Error fetching students:', error);
             });
-
     }, [batchId]);
-
     //fetch all questions
     useEffect(() => {
         fetch(`http://localhost:6969/question`)
             .then((response) => {
                 if (!response.ok) {
+                    console.log("hello7")
+
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 return response.json();
             })
             .then((data) => {
+                console.log("hello8")
+
                 setquestions(data);
             })
             .catch((error) => {
@@ -107,11 +118,19 @@ const NewExam = () => {
     const handleTestChange = (event) => {
         settestId(event.target.value);
     };
-
     const handleBatchChange = (event) => {
         setbatchId(event.target.value);
     };
-
+    // const handleStudentChange = (event) => {
+    //     const studentId = parseInt(event.target.value);
+    //     if (event.target.checked) {
+    //         setstdId((prevStdIds) => [...prevStdIds, studentId]);
+    //     } else {
+    //         setstdId((prevStdIds) =>
+    //             prevStdIds.filter((id) => id !== studentId)
+    //         );
+    //     }
+    // };
     const handleStudentChange = (event) => {
         const studentId = parseInt(event.target.value);
         if (event.target.checked) {
@@ -121,6 +140,7 @@ const NewExam = () => {
                 prevStdIds.filter((id) => id !== studentId)
             );
         }
+        setSelectAllStudents(false);
     };
     const handleQuestionChange = (event) => {
         const questionId = parseInt(event.target.value);
@@ -132,10 +152,16 @@ const NewExam = () => {
             );
         }
     };
+    // const handleCheckAllStudents = (event) => {
+    //     const checked = event.target.checked;
+    //     setstdId(checked ? students.map((s) => s.id) : []);
+    // };
     const handleCheckAllStudents = (event) => {
         const checked = event.target.checked;
+        setSelectAllStudents(checked);
         setstdId(checked ? students.map((s) => s.id) : []);
     };
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const requestBody = {
@@ -148,19 +174,19 @@ const NewExam = () => {
         axios.post('http://localhost:6969/exam/createexam', requestBody, {
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': token
             },
         })
             .then((response) => {
                 console.log('Exam created:', response.data);
                 alert('Exam created successfully');
+                navigate('/testtable');
             })
             .catch((error) => {
                 console.error('Error creating exam:', error);
                 alert('Exam creation failed. Please try again.');
             });
-
     }
-
     return (
         <div>
             <Form onSubmit={handleSubmit}>
@@ -191,7 +217,23 @@ const NewExam = () => {
                     <Form.Label><h5>Select students:</h5></Form.Label>
 
                     <Table striped bordered hover >
+
                         <thead>
+                            <tr>
+                                <th>
+                                    <Form.Check
+                                        type="checkbox"
+                                        label="Select All"
+                                        checked={selectAllStudents}
+                                        onChange={handleCheckAllStudents}
+                                    />
+                                </th>
+                                <th>PRN</th>
+                                <th>Roll No</th>
+                                <th>Full name</th>
+                            </tr>
+                        </thead>
+                        {/* <thead>
                             <tr>
                                 <th><Form.Check
                                     type="checkbox"
@@ -202,7 +244,7 @@ const NewExam = () => {
                                 <th>Roll No</th>
                                 <th>Full name</th>
                             </tr>
-                        </thead>
+                        </thead> */}
 
                         {students.map((student) => (
                             <tr>

@@ -19,6 +19,7 @@ const CreateTest = () => {
     testMaxMarks: '',
     testEndDate: '',
     testStartDate: '',
+    testMaxQuestions: '',
   });
 
   const handleInputChange = (event) => {
@@ -48,6 +49,8 @@ const CreateTest = () => {
           testMaxMarks: '',
           testEndDate: '',
           testStartDate: '',
+          testMaxQuestions: '',
+
         });
       } else {
         toast.error('Error creating test');
@@ -72,6 +75,10 @@ const CreateTest = () => {
         <Form.Group controlId="formTestDuration">
           <Form.Label>Test Duration (in minutes)</Form.Label>
           <Form.Control type="number" placeholder="Enter test duration" value={testDetails.testDuration} onChange={handleInputChange} name="testDuration" />
+        </Form.Group>
+        <Form.Group controlId="formTestMaxQuestions">
+          <Form.Label>Test Maximum Questions</Form.Label>
+          <Form.Control type="number" placeholder="Enter test maximum questions" value={testDetails.testMaxQuestions} onChange={handleInputChange} name="testMaxQuestions" />
         </Form.Group>
         <Form.Group controlId="formTestMaxMarks">
           <Form.Label>Test Maximum Marks</Form.Label>

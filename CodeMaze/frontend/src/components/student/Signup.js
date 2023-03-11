@@ -98,8 +98,8 @@ const Signup = () => {
 
         <br></br>  
           <Button className="btn btn-primary" type="submit" onClick={handleSubmit}>Submit form</Button>
-   
-
+    
+          <br></br> 
     </Form>
     </fieldset>
   )

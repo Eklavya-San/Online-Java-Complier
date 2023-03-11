@@ -3,7 +3,8 @@ import axios from "axios";
 import MonacoEditor from "react-monaco-editor";
 import QuestionComponent from "../exam/QuestionComponent";
 import { Button } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import TimeLeft from "./TimeLeft";
 
 function ExamScreen() {
   const user = JSON.parse(localStorage.getItem('user'));
@@ -11,23 +12,33 @@ function ExamScreen() {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const adminId = 1;
-  const  paramid = useParams();
-  var as=JSON.stringify(paramid);
-   const id = JSON.parse(as);
-   var testId = id.id;
-  
+  const paramid = useParams();
+  var as = JSON.stringify(paramid);
+  const id = JSON.parse(as);
+  var testId = id.id;
+
   var stdId = user.userId;
   const [queId, setQueId] = useState(0);
   var url;
   const [response, setresponse] = useState("");
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
+  const endExam = () => {
+    alert('Exam ended');
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    navigate('/studentdashboard');
+  }
 
   const analyze = async () => {
     try {
-      url = `http://localhost:6969/exam/submitanswer/${adminId}/${stdId}/${testId}/${queId}/java`;
-      const respo = await axios.patch(url, data, {
+      url = `http://192.168.1.36:6969/exam/submitanswer/${adminId}/${stdId}/${testId}/${queId}/java`;
+      console.log(input);
+      const respo = await axios.patch(url, input, {
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'plain/text',
+          'Authorization': token
         },
       });
       setresponse(respo);
@@ -46,13 +57,15 @@ function ExamScreen() {
     try {
       if (data !== "") {
         var url = `http://localhost:6969/console/run/java/${data}`
+
       } else {
-         url = `http://localhost:6969/console/run/java/""/`
+        url = `http://localhost:6969/console/run/java/""/`
       }
-      const response = await axios.post(url,input,
+      console.log(input);
+      const response = await axios.post(url, input,
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "plain/text",
           },
         }
       );
@@ -68,6 +81,7 @@ function ExamScreen() {
   return (
     <div>
 
+      <TimeLeft prop={testId} props={endExam} />
       <form onSubmit={handleSubmit}>
         <MonacoEditor
           language="java"
@@ -98,7 +112,7 @@ function ExamScreen() {
           <div>{console.log(response.data)}
             <p>Failed test cases: {response.data.failCount}</p>
             <p>Passed test cases: {response.data.passCount}</p>
-            <p>Obtained Mraks{response.data.queObtainedMarks}</p>
+            <p>Obtained Marks: {response.data.queObtainedMarks}</p>
 
 
           </div>
@@ -139,7 +153,7 @@ function ExamScreen() {
           theme="vs-dark"
           value={output}
           height="25vh"
-          width="100vh"
+          width="95vh"
           key="output-editor"
           options={{
             automaticLayout: true,

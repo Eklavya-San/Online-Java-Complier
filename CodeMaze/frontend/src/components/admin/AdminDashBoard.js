@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
+import FileUploadComponent from '../Batch/FileUploadComponent'
 const AdminDashBoard = () => {
   const navigate = useNavigate();
   useEffect(() => {
@@ -12,8 +12,21 @@ const AdminDashBoard = () => {
     }
   }, [navigate]);
   return (
-    <div><h1> AdminDashBoard</h1></div>
+    <div> 
+      
+      </div>
   )
 }
 
 export default AdminDashBoard
+
+// const token = localStorage.getItem("token");
+
+// fetch('https://example.com/run', {
+//     method: 'POST',
+//     body: JSON.stringify(requestBody),
+//     headers: {
+//         'Content-Type': 'application/json',
+//         'Authorization': token
+//     }
+// })

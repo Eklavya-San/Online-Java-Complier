@@ -1,7 +1,12 @@
+import { Center } from '@chakra-ui/react';
 import React, { useState } from 'react';
+import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
+import CreateAdmin from '../admin/CreateAdmin';
+import ForgotPass from '../common/ForgotPass';
+import './modal.css'
+import Signup from './Signup'
 const StudentLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -25,6 +30,7 @@ const StudentLogin = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+
       },
       body: JSON.stringify(requestBody),
     })
@@ -46,12 +52,15 @@ const StudentLogin = () => {
           progress: undefined,
           theme: 'dark',
         });
-        localStorage.setItem('token',"Bearer "+ data.token);
-        localStorage.setItem('user',JSON.stringify(data.dto));
+
+        //save dto and token in local storage 
+
+        localStorage.setItem('token', 'Bearer ' + data.token);
+        localStorage.setItem('user', JSON.stringify(data.dto));
         var user = JSON.parse(localStorage.getItem('user'));
-        if(user.userrole==='ROLE_ADMIN'){
+        if (user.userrole === 'ROLE_ADMIN') {
           history('/admindashboard')
-        }else{
+        } else {
           history('/studentdashboard')
         }
       })
@@ -69,9 +78,39 @@ const StudentLogin = () => {
         });
       });
   };
+  
+  const [adminModalOpen, setAdminModalOpen] = useState(false);
+  const [studentModalOpen, setStudentModalOpen] = useState(false);
+  const [forgotPassOpen, setforgotPassOpen] = useState(false);
+
+  const handleAdminModalOpen = () => {
+    setAdminModalOpen(true);
+  };
+
+  const handleAdminModalClose = () => {
+    setAdminModalOpen(false);
+  };
+
+  const handleStudentModalOpen = () => {
+    setStudentModalOpen(true);
+  };
+
+  const handleStudentModalClose = () => {
+    setStudentModalOpen(false);
+  };
+
+  const handleForgotPassModalClose = () => {
+    setforgotPassOpen(false);
+  };
+
+  const handleForgotPassModalOpen = () => {
+    setforgotPassOpen(true);
+  };
+
 
   return (
     <div className="container">
+      <Center><h3>Login into IACSD EXAM PORTAL</h3></Center>
       <div className="row justify-content-center">
         <div className="col-md-6 col-lg-4">
           <form onSubmit={handleSubmit}>
@@ -105,6 +144,48 @@ const StudentLogin = () => {
               Login
             </button>
           </form>
+          <br></br>
+          <hr></hr>
+
+          <h6>Don't have account yet sign up here</h6>
+
+          <div>
+            <Button onClick={handleAdminModalOpen}>Admin Sign Up</Button>
+            {adminModalOpen && (
+              <>
+                <div className="modal-overlay" onClick={handleAdminModalClose} />
+                <div className="modal-container">
+                  <CreateAdmin />
+                </div>
+              </>
+            )}
+          </div>
+          <hr></hr>
+          <div>
+            <Button onClick={handleStudentModalOpen}>Student Sign Up</Button>
+            {studentModalOpen && (
+              <>
+                <div className="modal-overlay" onClick={handleStudentModalClose} />
+                <div className="modal-container">
+                  <Signup />
+                </div>
+              </>
+            )}
+          </div>
+
+          <hr></hr>
+          <div>
+            <Button onClick={handleForgotPassModalOpen}>Forgot Password</Button>
+            {forgotPassOpen && (
+              <>
+                <div className="modal-overlay" onClick={handleForgotPassModalClose} />
+                <div className="modal-container">
+                  <ForgotPass />
+                </div>
+              </>
+            )}
+          </div>
+
         </div>
       </div>
     </div>

@@ -134,7 +134,7 @@ const UpdateQuestion = () => {
                         <CreateTestCase prop={pid} />
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button onClick={() => setShowModal(false)}  >Close</Button>
+                        <Button onClick={() => setShowModal(false)}>Close</Button>
                     </Modal.Footer>
                 </Modal>
                 <Button onClick={() => setShowModal(true)}>Add Test Case</Button>

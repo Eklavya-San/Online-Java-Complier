@@ -16,13 +16,15 @@ const ResultTable = () => {
     const paramid = useParams();
     var as = JSON.stringify(paramid);
     const id = JSON.parse(as);
-    var testId = id.id;
-    var adminId = id.id1;
+    var  adminId= id.id;
+    var testId = id.id1;
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetch(`http://localhost:6969/exam/resultlisttest/${adminId}/${testId}`);
             const data = await response.json();
             setResults(data);
+            console.log(data);
+            console.log(adminId,testId)
         };
         fetchData();
     }, [adminId, testId]);

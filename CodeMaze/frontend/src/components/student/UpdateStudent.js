@@ -47,7 +47,7 @@ const UpdateStudent = () => {
       stdEmail: email,
     };
     fetch(`http://localhost:6969/student/update/` + pid, {
-      method: 'PATCH',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },

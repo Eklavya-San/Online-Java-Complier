@@ -21,7 +21,7 @@ const CreateAdmin = () => {
       toast.error('Please fill in all fields');
     } else {
       // post form data to server
-      fetch('http://localhost:6969/admin/signup', {
+      fetch('http://localhost:6969/signupadmin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -47,7 +47,8 @@ const CreateAdmin = () => {
   return (
     <fieldset>
       <div>
-        <center><h3>Create Admin Form</h3></center>
+        <center><h3>SIGN UP</h3></center>
+        <center><h6>as admin</h6></center>
       </div>
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="adminEmail">
