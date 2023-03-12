@@ -33,7 +33,7 @@ function ExamScreen() {
 
   const analyze = async () => {
     try {
-      url = `http://192.168.1.36:6969/exam/submitanswer/${adminId}/${stdId}/${testId}/${queId}/java`;
+      url = `http://localhost:6969/exam/submitanswer/${adminId}/${stdId}/${testId}/${queId}/java`;
       console.log(input);
       const respo = await axios.patch(url, input, {
         headers: {

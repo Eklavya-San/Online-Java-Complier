@@ -40,7 +40,7 @@ public class Master implements Serializable {
 	// bi-directional many-to-one association to Student
 	@ManyToOne
 	@JoinColumn(name = "student_prn", nullable = false, insertable = false, updatable = false)
-	@JsonIgnoreProperties("masterTbls")
+	@JsonIgnoreProperties("masterTbls" )
 //	@JsonManagedReference
 	private Student studentTbl;
 

@@ -50,19 +50,37 @@ public class LogedInUserDto {
 		this.userrole = userrole;
 	}
 
+	public Long getBatchId() {
+		return batchId;
+	}
+
+	public void setBatchId(Long batchId) {
+		this.batchId = batchId;
+	}
+
+	public String getRollNo() {
+		return rollNo;
+	}
+
+	public void setRollNo(String rollNo) {
+		this.rollNo = rollNo;
+	}
+
 	private Long userId;
 	private String userEmail;
 	private String userFirstname;
 	private String userLastname;
 	private String username;
 	private String userrole;
+	private Long batchId;
+	private String rollNo;
 
 	public LogedInUserDto() {
 
 	}
 
 	public LogedInUserDto(Long userId, String userEmail, String userFirstname, String userLastname, String username,
-			String userrole) {
+			String userrole, Long batchId, String rollNo) {
 		super();
 		this.userId = userId;
 		this.userEmail = userEmail;
@@ -70,6 +88,8 @@ public class LogedInUserDto {
 		this.userLastname = userLastname;
 		this.username = username;
 		this.userrole = userrole;
+		this.batchId = batchId;
+		this.rollNo = rollNo;
 	}
 
 }

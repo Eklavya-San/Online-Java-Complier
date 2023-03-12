@@ -39,5 +39,8 @@ public interface IExamService {
 
 //get list of result from batch id
 	List<ExportResultDto> getResultListfromBatch(Long adminId, Long testId, Long batchId);
+	
+//get list of test  mapped to student
+	List<Test> getTestByAdminAndStudent(Long adminID, Long stdID);
 
 }

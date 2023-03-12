@@ -7,6 +7,7 @@ import CreateAdmin from '../admin/CreateAdmin';
 import ForgotPass from '../common/ForgotPass';
 import './modal.css'
 import Signup from './Signup'
+import './StudentLogin.css'
 const StudentLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -78,7 +79,7 @@ const StudentLogin = () => {
         });
       });
   };
-  
+
   const [adminModalOpen, setAdminModalOpen] = useState(false);
   const [studentModalOpen, setStudentModalOpen] = useState(false);
   const [forgotPassOpen, setforgotPassOpen] = useState(false);
@@ -110,7 +111,8 @@ const StudentLogin = () => {
 
   return (
     <div className="container">
-      <Center><h3>Login into IACSD EXAM PORTAL</h3></Center>
+      <Center><h1 className='cssFont_1'>IACSD EXAM PORTAL</h1></Center>
+      <Center><h2>Login</h2></Center>
       <div className="row justify-content-center">
         <div className="col-md-6 col-lg-4">
           <form onSubmit={handleSubmit}>
@@ -146,7 +148,7 @@ const StudentLogin = () => {
           </form>
           <br></br>
           <hr></hr>
-
+          {/* 
           <h6>Don't have account yet sign up here</h6>
 
           <div>
@@ -175,6 +177,42 @@ const StudentLogin = () => {
 
           <hr></hr>
           <div>
+            <Button onClick={handleForgotPassModalOpen}>Forgot Password</Button>
+            {forgotPassOpen && (
+              <>
+                <div className="modal-overlay" onClick={handleForgotPassModalClose} />
+                <div className="modal-container">
+                  <ForgotPass />
+                </div>
+              </> */}
+
+          <center><h6>Don't have account yet sign up here</h6></center>
+
+          <div className="buttons-container">
+            <Button onClick={handleAdminModalOpen}>Admin Sign Up</Button>
+            {adminModalOpen && (
+              <>
+                <div className="modal-overlay" onClick={handleAdminModalClose} />
+                <div className="modal-container">
+                  <CreateAdmin />
+                </div>
+              </>
+            )}
+          </div>
+          {/* <hr /> */}
+          <div className="buttons-container">
+            <Button onClick={handleStudentModalOpen}>Student Sign Up</Button>
+            {studentModalOpen && (
+              <>
+                <div className="modal-overlay" onClick={handleStudentModalClose} />
+                <div className="modal-container">
+                  <Signup />
+                </div>
+              </>
+            )}
+          </div>
+          {/* <hr /> */}
+          <div className="buttons-container">
             <Button onClick={handleForgotPassModalOpen}>Forgot Password</Button>
             {forgotPassOpen && (
               <>

@@ -8,7 +8,10 @@ import Navigation from './components/common/Navigation';
 function App() {
   return (
     <div className="container">
+     
       <BrowserRouter>
+
+        <Navigation />
         <div className="container">
           <ToastContainer
             position="top-center"
@@ -22,8 +25,7 @@ function App() {
             pauseOnHover
             theme="dark"
           />
-          <Navigation/>
-          {/* <Menu /> */}
+          {/* <menu /> */}
 
         </div>
 

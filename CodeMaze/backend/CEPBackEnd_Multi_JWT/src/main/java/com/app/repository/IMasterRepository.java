@@ -28,9 +28,13 @@ public interface IMasterRepository extends JpaRepository<Master, MasterPK> {
 	Integer getTotalMarks(@Param("studentPrn") Long studentPrn, @Param("testId") Long testId,
 			@Param("adminId") Long adminId);
 
-	// get test list by admin id
+// get test list by admin id
 	@Query("SELECT m.masterId.testId FROM Master m WHERE m.masterId.adminId = :adminId GROUP BY m.masterId.testId")
 	List<Long> findByAdminIdGroupByTestId(@Param("adminId") Long adminId);
+// for student dashboard	
+// get test list by admin id and student id
+	@Query("SELECT m.masterId.testId FROM Master m WHERE m.masterId.adminId = :adminId AND m.masterId.studentPrn = :studentPrn GROUP BY m.masterId.testId")
+	List<Long> findByAdminIdAndStdIdGroupByTestId(@Param("adminId") Long adminId, @Param("studentPrn") Long studentPrn);
 
 //get question list by test id
 	@Query("SELECT m.masterId.questionId FROM Master m WHERE m.masterId.adminId = :adminId AND m.masterId.testId = :testId GROUP BY m.masterId.questionId")

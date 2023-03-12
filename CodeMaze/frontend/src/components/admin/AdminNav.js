@@ -37,7 +37,6 @@ const AdminNav = () => {
     localStorage.getItem("token");
     const navigate = useNavigate();
     const [flag, setflag] = useState("true")
-
     useEffect(() => {
         if (flag === "false") {
             setflag("true")
@@ -45,7 +44,7 @@ const AdminNav = () => {
             
         }
     }, [flag]);
-
+    
     const logout = () => {
         confirmAlert({
             title: 'Confirm logout',

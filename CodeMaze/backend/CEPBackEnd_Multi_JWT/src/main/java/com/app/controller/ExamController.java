@@ -45,8 +45,8 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 @RestController
-@RequestMapping("/exam")
 @CrossOrigin
+@RequestMapping("/exam")
 public class ExamController {
 //dependency for service class
 	@Autowired
@@ -79,6 +79,12 @@ public class ExamController {
 	@GetMapping("/examtestlist/{adminId}")
 	public List<Test> getTestByAdmin(@PathVariable Long adminId) {
 		return examService.getTestByAdmin(adminId);
+	}
+
+//get exam list by admin id
+	@GetMapping("/examtestlist/{adminId}/{stdId}")
+	public List<Test> getTestByAdmin(@PathVariable Long adminId, @PathVariable Long stdId) {
+		return examService.getTestByAdminAndStudent(adminId, stdId);
 	}
 
 //get std list by test
@@ -164,12 +170,14 @@ public class ExamController {
 
 //export result pdf by batch
 	@GetMapping("/resultexpbatch/{batchId}/{testId}/{adminId}/result_batch.pdf")
+//	public void exportBatchResultPdf(@PathVariable Long batchId, @PathVariable Long testId, @PathVariable Long adminId,
+//			@RequestParam("filePath") String filePath, HttpServletResponse response)
 	public void exportBatchResultPdf(@PathVariable Long batchId, @PathVariable Long testId, @PathVariable Long adminId,
 			HttpServletResponse response) throws IOException, DocumentException {
 
 		List<ExportResultDto> examResults = examService.getResultListfromBatch(adminId, testId, batchId);
 		// Set up the PDF document and file path
-		String filePath = "F:/DAC_Project/Coding_Assessment_Portal/result.pdf";
+		String filePath = "/result_batch.pdf";
 		FileOutputStream outputStream = new FileOutputStream(filePath);
 
 		// Set up the PDF document
@@ -225,7 +233,7 @@ public class ExamController {
 		document.close();
 		outputStream.close();
 		response.setContentType("application/pdf");
-		response.setHeader("Content-disposition", "attachment; filename=result.pdf");
+		response.setHeader("Content-disposition", "attachment; filename=result_batch.pdf");
 
 		// Write the PDF file to the response output stream
 		Path file = Paths.get(filePath);
@@ -237,13 +245,15 @@ public class ExamController {
 
 // export result pdf by test
 	@GetMapping("/resultexptest/{adminId}/{testId}/result_test.pdf")
+//	public void exportTestResultPdf(@PathVariable Long adminId, @PathVariable Long testId,
+//			@RequestParam("filePath") String filePath, HttpServletResponse response)
 	public void exportTestResultPdf(@PathVariable Long adminId, @PathVariable Long testId, HttpServletResponse response)
 			throws IOException, DocumentException {
 
 		List<ExportResultDto> examResults = examService.getResultListfromTest(adminId, testId);
 
 		// Set up the PDF document and file path
-		String filePath = "/home/monster/proCodex/coder/Coding_Assessment_Portal/FrontEnd/frontend/result.pdf";
+		String filePath = "/home/monster/result_test.pdf";
 		FileOutputStream outputStream = new FileOutputStream(filePath);
 
 		// Set up the PDF document
@@ -299,7 +309,7 @@ public class ExamController {
 		document.close();
 		outputStream.close();
 		response.setContentType("application/pdf");
-		response.setHeader("Content-disposition", "attachment; filename=result.pdf");
+		response.setHeader("Content-disposition", "attachment; filename=result_test.pdf");
 
 		// Write the PDF file to the response output stream
 		Path file = Paths.get(filePath);

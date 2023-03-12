@@ -30,4 +30,7 @@ public interface ITestService {
 
 // get by title
 	List<Test> getByTestEndDate(LocalDate testEnd);
+
+//end test
+	Test endTest(Long testId);
 }

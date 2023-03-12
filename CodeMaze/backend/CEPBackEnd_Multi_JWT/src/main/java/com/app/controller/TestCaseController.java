@@ -24,8 +24,8 @@ import com.app.service.IQuestionService;
 import com.app.service.ITestCaseService;
 
 @RestController
-@RequestMapping("/testcase")
 @CrossOrigin
+@RequestMapping("/testcase")
 public class TestCaseController {
 //dependency for service class
 	@Autowired

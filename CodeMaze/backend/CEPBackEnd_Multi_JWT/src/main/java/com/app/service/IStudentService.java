@@ -1,6 +1,9 @@
 package com.app.service;
 
+import java.io.IOException;
 import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.app.dto.ForgotPasswordStudentDto;
 import com.app.dto.StudentWithBatchIdDto;
@@ -35,4 +38,5 @@ public interface IStudentService {
 
 	Login insertStudent(Student transientStudent, Long long1);
 
+	void processExcelFile(MultipartFile file) throws IOException;
 }

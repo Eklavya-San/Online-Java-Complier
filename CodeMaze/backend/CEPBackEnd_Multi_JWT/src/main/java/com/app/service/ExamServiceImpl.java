@@ -40,7 +40,22 @@ public class ExamServiceImpl implements IExamService {
 	private IBatchService batchService;
 
 //Here exam means adminId+StudentsList+TestId+Questions
+
 //get exam mapping list of test by id
+	@Override
+	public List<Test> getTestByAdminAndStudent(Long adminID, Long stdID) {
+//init list
+		List<Test> testList = new ArrayList<Test>();
+//get list from repo for admin id
+		List<Long> repoList = masterRepo.findByAdminIdAndStdIdGroupByTestId(adminID, stdID);
+//feed object in list by loop
+		for (int i = 0; i < repoList.size(); i++) {
+			testList.add(testService.getByTestId(repoList.get(i)));
+		}
+		return testList;
+	}
+
+// get test list of test for particular student by admin and studentid
 	@Override
 	public List<Test> getTestByAdmin(Long adminID) {
 //init list
@@ -49,7 +64,7 @@ public class ExamServiceImpl implements IExamService {
 		List<Long> repoList = masterRepo.findByAdminIdGroupByTestId(adminID);
 //feed object in list by loop
 		for (int i = 0; i < repoList.size(); i++) {
-			testList.add(i, testService.getByTestId(repoList.get(i)));
+			testList.add(testService.getByTestId(repoList.get(i)));
 		}
 		return testList;
 	}

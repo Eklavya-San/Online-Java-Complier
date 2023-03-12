@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.service.IConsoleService;
 
 @RestController
-@RequestMapping("/console")
 @CrossOrigin
+@RequestMapping("/console")
 public class ConsoleController {
 
 	@Autowired
@@ -26,7 +26,7 @@ public class ConsoleController {
 	}
 
 //send code to run
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin
 	@PostMapping("/run/{lang}/{input}")
 	public String compileCode(@PathVariable String lang, @PathVariable String input, @RequestBody String objCode) {
 		return consoleService.sendCompileCode(lang, input, objCode);

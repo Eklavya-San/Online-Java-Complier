@@ -14,7 +14,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.ServletRequestDataBinder;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -34,7 +33,6 @@ import com.app.service.ITestService;
 
 @RestController
 @RequestMapping("/test")
-@CrossOrigin
 public class TestController {
 //dependency for service class
 	@Autowired

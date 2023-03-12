@@ -23,8 +23,8 @@ import com.app.entity.Question;
 import com.app.service.IQuestionService;
 
 @RestController
-@RequestMapping("/question")
 @CrossOrigin
+@RequestMapping("/question")
 public class QuestionController {
 //dependency for service class
 	@Autowired

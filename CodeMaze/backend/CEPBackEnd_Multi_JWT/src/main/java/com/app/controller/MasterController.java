@@ -21,8 +21,8 @@ import com.app.entity.Master;
 import com.app.service.IMasterService;
 
 @RestController
-@RequestMapping("/master")
 @CrossOrigin
+@RequestMapping("/master")
 public class MasterController {
 //dependency for service class
 	@Autowired

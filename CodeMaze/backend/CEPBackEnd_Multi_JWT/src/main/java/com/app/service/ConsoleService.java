@@ -62,6 +62,7 @@ public class ConsoleService implements IConsoleService {
 
 		// check the HTTP response status code and return the response body
 		if (response.getStatusCode() == HttpStatus.OK) {
+			System.out.println("Console compiler o/p- = "+response.getBody());
 			return response.getBody();
 		} else {
 			throw new RuntimeException("Error executing request: " + response.getStatusCode());

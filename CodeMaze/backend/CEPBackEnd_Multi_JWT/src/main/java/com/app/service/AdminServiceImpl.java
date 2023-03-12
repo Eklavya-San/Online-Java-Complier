@@ -124,6 +124,9 @@ public class AdminServiceImpl implements IAdminService {
 		inUserDto.setUserId(student.getStdPrn());
 		inUserDto.setUsername(username);
 		inUserDto.setUserrole("ROLE_STUDENT");
+		inUserDto.setBatchId(student.getBatchTbl().getBatchId());
+		System.out.println("hoiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"+student.getBatchTbl().getBatchId());
+		inUserDto.setRollNo(student.getStdRollno());
 		return inUserDto;
 	}
 

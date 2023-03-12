@@ -87,5 +87,16 @@ public class TestServiceImpl implements ITestService {
 	public List<Test> getByTestEndDate(LocalDate testEnd) {
 		return testRepo.findByTestEndDate(testEnd);
 	}
+//end test by updating its end date only-> set to current date
+	@Override
+	public Test endTest(Long testId) {
+		if (testRepo.existsById(testId)) {
+			Test upTest = getByTestId(testId);
+			//set curr date and expire it
+			upTest.setTestEndDate(LocalDate.now());
+			return testRepo.save(upTest);
+		}
+		throw new ResourceNotFoundException("Invalid Test Id : Updation Failed");
+	}
 
 }

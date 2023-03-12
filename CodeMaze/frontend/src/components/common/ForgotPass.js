@@ -48,23 +48,23 @@ const ForgotPass=()=> {
   };
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    var requestBody= {
-      email: email,
-      otp: otp,
-      newPassword: newPassword,
-    }
-    console.log(requestBody);
-    axios.post('http://localhost:6969/submitotp', requestBody)
-      .then((response) => {
-        console.log('Submit OTP success:', response.data.message);
-        toast.success('Password Updated!');
-      })
-      .catch((error) => {
-        console.error('Submit OTP error:', error);
-        toast.error('Failed to update password!');
-      });
-  };
+  event.preventDefault();
+  var requestBody= {
+    email: email,
+    otp: otp,
+    newPassword: newPassword,
+  }
+  console.log(requestBody);
+  axios.post('http://localhost:6969/submitotp', requestBody)
+    .then((response) => {
+      console.log('Submit OTP success:', response.data.message);
+      toast.success('Password Updated!');
+    })
+    .catch((error) => {
+      console.error('Submit OTP error:', error);
+      toast.error('Failed to update password!');
+    });
+};
 
   return (
     <div>

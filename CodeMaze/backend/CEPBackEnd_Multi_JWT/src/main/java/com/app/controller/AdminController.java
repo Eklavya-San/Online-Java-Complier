@@ -22,8 +22,8 @@ import com.app.entity.Admin;
 import com.app.service.IAdminService;
 
 @RestController
-@RequestMapping("/admin")
 @CrossOrigin
+@RequestMapping("/admin")
 public class AdminController {
 
 	@Autowired

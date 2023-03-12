@@ -1,14 +1,21 @@
 package com.app.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.app.custom_exception.ResourceNotFoundException;
 import com.app.dto.ForgotPasswordStudentDto;
@@ -38,6 +45,9 @@ public class StudentServiceImpl implements IStudentService {
 
 	@Autowired
 	private IBatchRepository batchRepository;
+	
+	@Autowired
+	private ILoginRepository loginRepository;
 
 	@Override
 	public List<Student> getAll() {
@@ -98,7 +108,10 @@ public class StudentServiceImpl implements IStudentService {
 	@Override
 	public String deleteStudent(Long id) {
 		if (studentRepo.existsById(id)) {
-			studentRepo.deleteById(id);
+			Student student = studentRepo.findById(id).get();
+			 Login login = loginRepo.findById(student.getStdEmail()).get();
+			 loginRepo.delete(login);
+		//	studentRepo.deleteById(id);
 			return "Student Succesfully Deleted";
 		}
 		return "Student Deletion Failed : Invalid Id";
@@ -143,4 +156,36 @@ public class StudentServiceImpl implements IStudentService {
 				.orElseThrow(() -> new ResourceNotFoundException("Student Not Found !"));
 	}
 
+	@Override
+	public void processExcelFile(MultipartFile file) throws IOException {
+		try (Workbook workbook = new XSSFWorkbook(file.getInputStream())) {
+			Sheet sheet = workbook.getSheetAt(0);
+
+			long batchid;
+			for (Row row : sheet) {
+				if (row.getRowNum() == 0) {
+					continue; // skip header row
+				}
+
+				Student student = new Student();
+				student.setStdPrn((long) row.getCell(0).getNumericCellValue());
+				System.out.println("prn " + row.getCell(0).getNumericCellValue());
+				student.setStdRollno(row.getCell(1).getStringCellValue());
+				System.out.println("roll " + row.getCell(1).getStringCellValue());
+				student.setStdFirstname(row.getCell(2).getStringCellValue());
+				System.out.println("fn " + row.getCell(2).getStringCellValue());
+				student.setStdLastname(row.getCell(3).getStringCellValue());
+				System.out.println("ln " + row.getCell(3).getStringCellValue());
+				student.setStdEmail(row.getCell(4).getStringCellValue());
+				System.out.println("email " + row.getCell(4).getStringCellValue());
+				student.setStdPassword(row.getCell(5).getStringCellValue());
+				System.out.println("pass " + row.getCell(5).getStringCellValue());
+				batchid = (long) row.getCell(6).getNumericCellValue();
+				insertStudent(student, batchid);
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

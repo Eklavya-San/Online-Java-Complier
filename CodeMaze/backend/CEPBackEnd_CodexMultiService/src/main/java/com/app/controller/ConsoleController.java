@@ -13,7 +13,6 @@ import com.app.service.IConsoleService;
 
 @RestController
 @RequestMapping("/console")
-@CrossOrigin
 public class ConsoleController {
 
 	@Autowired
@@ -26,7 +25,7 @@ public class ConsoleController {
 	}
 
 //send code to run
-	@CrossOrigin
+	@CrossOrigin(origins = "http://localhost:3000")
 	@PostMapping("/run/{lang}/{input}")
 	public String compileCode(@PathVariable String lang, @PathVariable String input, @RequestBody String objCode) {
 		return consoleService.sendCompileCode(lang, input, objCode);

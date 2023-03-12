@@ -24,8 +24,8 @@ import com.app.entity.Batch;
 import com.app.service.IBatchService;
 
 @RestController
-@RequestMapping("/batch")
 @CrossOrigin
+@RequestMapping("/batch")
 public class BatchController {
 
 	@Autowired

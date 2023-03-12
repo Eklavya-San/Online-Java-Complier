@@ -59,16 +59,22 @@ public class SubmitAnswerServiceImpl implements ISubmitAnswerService {
 			ObjectMapper objectMapper = new ObjectMapper();
 			CompilerResponseDto compileResult = objectMapper.readValue(compilerResponse, CompilerResponseDto.class);
 //condition checking for answer correctness
-			System.out.println(compileResult.getOutput());
-			System.out.println(testCase.getCaseOutput());
+			System.out.println("compiler =  " + compileResult.getOutput());
+//			if(compileResult.getOutput().contains("\r"))
+//			{
+//				compileResult.setOutput(compileResult.getOutput().replace("\r", ""));
+//				System.out.println(compileResult.getOutput());
+//			}
+			System.out.println("database =  " + testCase.getCaseOutput());
 			// check for pass and failed
+//			if (testCase.getCaseOutput().equals(compileResult.getOutput().replace("\n+$", ""))) {
 			if (testCase.getCaseOutput().equals(compileResult.getOutput())) {
 				passedCases.add(listTestCase.get(i));
 //get old marks
 				int oldMarks = objMaster.getResultObtainedMarks();
 //setnew marks concat to old
 				objMaster.setResultObtainedMarks(oldMarks + testCase.getCaseMarks());
-				System.out.println(oldMarks + testCase.getCaseMarks());
+//				System.out.println(oldMarks + testCase.getCaseMarks());
 			} else {
 				failedCases.add(listTestCase.get(i));
 			}

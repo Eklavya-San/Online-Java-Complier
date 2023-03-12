@@ -24,8 +24,8 @@ import com.app.service.IBatchService;
 import com.app.service.IStudentService;
 
 @RestController
-@RequestMapping("/student")
 @CrossOrigin
+@RequestMapping("/student")
 public class StudentController {
 
 	@Autowired

@@ -33,8 +33,8 @@ import com.app.entity.Test;
 import com.app.service.ITestService;
 
 @RestController
-@RequestMapping("/test")
 @CrossOrigin
+@RequestMapping("/test")
 public class TestController {
 //dependency for service class
 	@Autowired
@@ -125,6 +125,12 @@ public class TestController {
 	@PatchMapping("/update/{testId}")
 	public Test updateTest(@PathVariable long testId, @RequestBody UpdateTestDto detTest) {
 		return testService.editTest(testId, detTest);
+	}
+
+// End test by admin
+	@PatchMapping("/end/{testId}")
+	public Test endTest(@PathVariable Long testId) {
+		return testService.endTest(testId);
 	}
 
 }
